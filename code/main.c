@@ -28,14 +28,13 @@
             (da).data = ptr;                                                                \
             (da).capacity = new_capacity;                                                   \
         }                                                                                   \
-        (da).data[(da).count] = elt;                                                        \
-        (da).count++;                                                                       \
+        (da).data[(da).count++] = elt;                                                        \
     }                                                                                       \
     while (0)
 
 #define da_foreach(type, elt, da, body) \
     for(int i=0; i<(da).count; i++) {   \
-        type elt=(da).data[i];          \
+        type *elt=&(da).data[i];          \
         body                            \
     }
 
@@ -59,7 +58,8 @@ int main(void) {
     }
 
     da_foreach(int, n, da, {
-               printf("%d ", n);
+               printf("%d ", *n);
+               *n = 789;
                });
     printf("\n");
 
